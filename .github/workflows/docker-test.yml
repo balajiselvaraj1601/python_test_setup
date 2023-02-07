@@ -12,7 +12,7 @@ jobs:
 
     runs-on: ubuntu-latest    
     container:
-      image: ghcr.io/owner/image
+      image: ghcr.io/balajiselvaraj1601/sample_docker_1
       credentials:
          username: ${{ github.actor }}
          password: ${{ secrets.github_token }}

@@ -20,3 +20,5 @@ jobs:
     - uses: actions/checkout@v3
     - name: Run the Docker image
       run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv) 
+    - name: Run the code inside docker
+      run: python app_file.py

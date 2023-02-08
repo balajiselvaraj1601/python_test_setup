@@ -19,6 +19,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
     - name: Publish to Github Container registry
       run: |
-            docker build . --file Dockerfile --tag ghcr.io/balajiselvaraj1601/sample_docker_1:latest
-            docker run ghcr.io/balajiselvaraj1601/sample_docker_1:latest
-            docker push ghcr.io/balajiselvaraj1601/sample_docker_1:latest
+            echo "${{ github.actor }}"
+            docker build . --file Dockerfile --tag ghcr.io/${{ github.actor }}/sample_docker_1:latest
+            docker run ghcr.io/${{ github.actor }}/sample_docker_1:latest
+            docker push ghcr.io/${{ github.actor }}/sample_docker_1:latest

@@ -22,7 +22,7 @@ else:
 
 # Check if any of the required labels are present
 flag_label = False
-print(f"Issue Labels: " {issue_labels})
+print(f"Issue Labels:  {issue_labels}")
 for label in required_labels:
     if label in [l["name"] for l in issue_labels]:
         flag_label = True

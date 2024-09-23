@@ -12,7 +12,7 @@ jobs:
       - name: Check if Issue has Labels
         run: |
           # Extract the labels from the closed issue
-          labels=$(echo "${{ toJson(github.event.issue.labels) }}" | sed 's/[{}]//g' | tr ',' '\n' | sed 's/.*"name": "$$.*$$".*/\1/')
+          labels=$(echo "${{ toJson(github.event.issue.labels) }}" | sed 's/[{}]//g' | tr ',' '\n' | sed 's/."name": "//g' | sed 's/".//')
           
           # Define the required labels
           required_labels=("bug" "documentation" "enhancement")

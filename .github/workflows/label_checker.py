@@ -12,13 +12,16 @@ required_labels = ["bug", "documentation", "enhancement"]
 # Get the issue details from the GitHub event
 issue_number = os.environ["GITHUB_EVENT_ISSUE_NUMBER"]
 issue_labels = json.loads(os.environ["GITHUB_EVENT_ISSUE_LABELS"])
-iteration_info = os.environ["GITHUB_EVENT_ITERATION"]
+iteration_info = json.loads(os.environ["GITHUB_EVENT_ITERATION"])
+iteration_info_new = json.loads(os.environ["GITHUB_EVENT_ITERATION_NEW"])
 
 # Check if iteration information is captured
-print(f"Iteration Info:  {len(iteration_info)}")
+print(f"Iteration Info:  {(iteration_info)}")
+print(f"Iteration Info:  {(iteration_info_new)}")
+
 flag_iteration = False
-if len(iteration_info) > 0:
-    flag_iteration = True
+# if len(iteration_info) > 0:
+#     flag_iteration = True
 
 # Check if any of the required labels are present
 print(f"Issue Labels:  {issue_labels}")

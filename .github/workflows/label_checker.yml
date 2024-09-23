@@ -1,5 +1,4 @@
 name: Label Checker
-description: This GitHub Action checks if labels are attached to an issue and fails if any of configured listed labels are not present.
 
 on:
   issues:

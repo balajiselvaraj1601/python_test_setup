@@ -28,4 +28,4 @@ jobs:
           REPO_OWNER: ${{ github.repository_owner }}
           REPO_NAME: ${{ github.event.repository.name }}
           PROJECT_NAME: python_test_setup  # Replace with your project name
-        run: python fetch_priority_info.py
+        run: python ./.github/workflows/fetch_priority_info.py

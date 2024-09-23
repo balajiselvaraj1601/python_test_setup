@@ -9,6 +9,8 @@ github_token = os.environ["GITHUB_TOKEN"]
 # Get the issue details from the GitHub event
 issue_number = os.environ["GITHUB_EVENT_ISSUE_NUMBER"]
 issue_labels = json.loads(os.environ["GITHUB_EVENT_ISSUE_LABELS"])
+iteration_info = os.environ["GITHUB_EVENT_ITERATION"]
+print(f"iteration_info: {iteration_info}")
 
 # Define the required labels
 required_labels = ["bug", "documentation", "enhancement"]

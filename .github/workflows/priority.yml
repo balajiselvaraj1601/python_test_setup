@@ -1,10 +1,9 @@
 name: Fetch Priority Info
 
 on:
-  push:
-    branches:
-      - main
-
+  issues:
+    types: [closed]
+    
 jobs:
   fetch-priority-info:
     runs-on: ubuntu-latest

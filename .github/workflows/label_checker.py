@@ -15,14 +15,14 @@ issue_labels = json.loads(os.environ["GITHUB_EVENT_ISSUE_LABELS"])
 iteration_info = os.environ["GITHUB_EVENT_ITERATION"]
 
 # Check if iteration information is captured
+print(f"Iteration Info:  {len(iteration_info)}")
+flag_iteration = False
 if len(iteration_info) > 0:
-    flag_iteration = False
-else:
     flag_iteration = True
 
 # Check if any of the required labels are present
-flag_label = False
 print(f"Issue Labels:  {issue_labels}")
+flag_label = False
 for label in required_labels:
     if label in [l["name"] for l in issue_labels]:
         flag_label = True

@@ -1,0 +1,24 @@
+name: Label Checker
+
+on:
+  issues:
+    types: [closed]
+
+jobs:
+  check-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Check labels
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_EVENT_ISSUE_NUMBER: ${{ github.event.issue.number }}
+          GITHUB_EVENT_ISSUE_LABELS: ${{ toJson(github.event.issue.labels) }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python label_checker.py

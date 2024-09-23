@@ -1,11 +1,23 @@
+name: PR Label Checker
+description: This GitHub Action checks if labels are attached to a PR and fails if any of configured listed labels are not present.
+branding:
+  icon: 'check-circle'
+  color: 'green'
+
+on:
+  pull_request:
+    branches: 
+    - development
+    types: [ labeled, opened, unlabeled ]
+
 jobs:
-  check-bug:
+  check-labels:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Labels not added (bug)
-      if: >
-        contains(github.event.pull_request.labels.*.name, 'bug') == false && 
-        contains(github.event.pull_request.labels.*.name, 'documentation') == false && 
-        contains(github.event.pull_request.labels.*.name, 'documentation') == false && 
+    - name: Labels added
+      if: ${{ contains(fromJson('["bug", "documentation", "enhancement"]'), github.event.label.name) == true }}
+      run: echo Pass
+    - name: Labels not added (bug, documentation, or enhancement)
+      if: ${{ contains(fromJson('["bug"]'), github.event.label.name) != true }}
       run: exit 1

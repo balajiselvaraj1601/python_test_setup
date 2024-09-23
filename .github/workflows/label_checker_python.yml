@@ -21,6 +21,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_EVENT_ISSUE_NUMBER: ${{ github.event.issue.number }}
+          GITHUB_EVENT_ITERATION: ${{ github.event.inputs.iteration_value }}
           GITHUB_EVENT_ISSUE_LABELS: ${{ toJson(github.event.issue.labels) }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python ./.github/workflows/label_checker.py

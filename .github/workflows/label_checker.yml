@@ -9,16 +9,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Check if Issue has Labels
-        if: github.event.action == 'closed'
         run: |
-          if: ${{ contains(fromJson('["bug", "documentation", "enhancement"]'), github.event.label.name) == false }}; then
+          # Extract the labels from the closed issue
+          labels=$(jq -r '.issue.labels | map(.name) | .[]' <<< "${{ toJson(github.event.issue) }}")
+
+          # Define the required labels
+          required_labels=("bug" "documentation" "enhancement")
+
+          # Check if any of the required labels are present
+          label_found=false
+          for label in "${required_labels[@]}"; do
+            if [[ " ${labels[@]} " =~ " $label " ]]; then
+              label_found=true
+              break
+            fi
+          done
+
+          # If no required labels are found, reopen the issue
+          if [ "$label_found" = false ]; then
             echo "Label Check: Failure. Reopening the issue."
             curl -X PATCH \
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }} \
-              -d '{"state": "open"}'            
+              -d '{"state": "open"}'
           else
             echo "Label Check: Success"
           fi

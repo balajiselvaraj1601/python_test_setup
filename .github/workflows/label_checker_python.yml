@@ -21,6 +21,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_EVENT_ISSUE_NUMBER: ${{ github.event.issue.number }}
+          GITHUB_EVENT_ISSUE_URL: ${{ github.event.issue.url }}
           GITHUB_EVENT_ITERATION: ${{ toJson(github.event.issue) }}
           GITHUB_EVENT_ITERATION_NEW: ${{ toJson(github.event) }}
           GITHUB_EVENT_ISSUE_LABELS: ${{ toJson(github.event.issue.labels) }}

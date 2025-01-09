@@ -1,4 +1,4 @@
-name: Enforce Iteration Mention
+name: Enforce Iteration Mention with Bash
 
 on:
   issues:
@@ -9,12 +9,22 @@ jobs:
   enforce-iteration:
     runs-on: ubuntu-latest
     steps:
-      - name: Check for iteration keyword
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const issue = context.payload.issue;
-            const iterationKeyword = "Iteration:"; // Define your iteration keyword
-            if (!issue.body.includes(iterationKeyword)) {
-              throw new Error("You must mention the iteration (e.g., 'Iteration: Sprint 1') before closing this issue.");
-            }
+      # Step 1: Check out the repository (required for GitHub Actions)
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      # Step 2: Run the Bash script to validate the issue
+      - name: Enforce iteration mention
+        run: |
+          # Get the issue body from the GitHub API
+          ISSUE_BODY=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "${{ github.event.issue.url }}" | jq -r .body)
+
+          # Check if "Iteration:" is mentioned in the issue body
+          if [[ "$ISSUE_BODY" != *"Iteration:"* ]]; then
+            echo "Error: You must mention the iteration (e.g., 'Iteration: Sprint 1') before closing this issue."
+            exit 1
+          fi
+
+          echo "Iteration mention found, proceeding with issue closure."

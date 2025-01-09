@@ -1,0 +1,20 @@
+name: Enforce Iteration Mention
+
+on:
+  issues:
+    types:
+      - closed
+
+jobs:
+  enforce-iteration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for iteration keyword
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const iterationKeyword = "Iteration:"; // Define your iteration keyword
+            if (!issue.body.includes(iterationKeyword)) {
+              throw new Error("You must mention the iteration (e.g., 'Iteration: Sprint 1') before closing this issue.");
+            }
